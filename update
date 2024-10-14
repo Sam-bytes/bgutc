@@ -1,0 +1,6 @@
+cp -f bgutc /usr/bin/bgutc
+chmod +x /usr/bin/bgutc
+
+cp -f bgutc.conf /home/$(logname)/.config.bgutc.conf
+
+cp -f bgutc.desktop /home/$(logname)/.local/share/applications/bgutc.desktop

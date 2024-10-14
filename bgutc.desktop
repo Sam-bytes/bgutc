@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=bgutc
+Exec=/usr/bin/bgutc
+Terminal=false
+Icon=utilities-terminal
