@@ -23,7 +23,63 @@ This file is necessary for app launcher programs (such as Rofi).
 
 ## Configuration
 
-**In progress**
+All configurations must be made in the bgutc.conf file !
+
+### Step 1 : Tell which programs you want to changer their configuration
+
+> For example, I need to change my polybar and my rofi configuration
+
+Write the name of these programs at the **first** line of the file :
+
+---
+\# ~/.config/bgutc.conf
+rofi polybar
+
+---
+
+### Step 2 : Name your preset
+
+> For example, I have two presets : waterfall and nightfall
+
+Write the name of these presets at the **second** line of the file :
+
+---
+\# ~/.config/bgutc.conf
+rofi polybar
+waterfall nightfall
+
+---
+
+### Step 3 : Write the path
+
+Now, you have to write where the config file (the one which will be read by your program) is and where your config files are by following this structure :
+
+---
+\[program_name]
+conf="/path/to/the/conf/file"
+preset_1="/path/to/your/conf/file1"
+preset_2="/path/to/your/conf/file2"
+
+---
+
+In my example, I have to write this :
+
+---
+\# ~/.config/bgutc.conf
+rofi polybar
+waterfall nightfall
+
+\[rofi]
+conf="/home/user/.config/rofi/config.rasi"
+waterfall="/home/user/.config/rofi/config_waterfall.rasi"
+nightfall="/home/user/.config/rofi/config_nightfall.rasi"
+
+\[polybar]
+conf="/home/user/.config/polybar/config.ini"
+waterfall="/home/user/.config/polybar/config_waterfall.ini"
+nightfall="/home/user/.config/polybar/config_nightfall.ini"
+
+---
 
 ## Installation 
 
@@ -45,6 +101,14 @@ $ sudo chmod +x /usr/bin/bgutc
 Move the bgutc.conf file to ~/.config/
 
 Move the bgutc.desktop to ~/.local/share/applications/
+
+## Compatibility list
+
+Currently, bgutc is compatible with :
+
+- i3
+- polybar
+- rofi
 
 ## If you have an issue
 
