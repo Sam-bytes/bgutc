@@ -11,3 +11,5 @@ bgutc comes with 2 files
 - a desktop entry (/home/user/.local/share/applications/bgutc.desktop)
 
 ## Configuration
+
+**In progress**
