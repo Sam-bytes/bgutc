@@ -1,40 +1,70 @@
+# 3 issues 
+
+# ligne 14
+# ligne 57
+# ligne 58
+
+
 #! /bin/bash
 
 # Bash Graphical User Theme Changer
 
-version="0.1"
+version="0.9"
+
+# How to config themes ???
 theme='tsunami cyberpunk'
-
-
-set_tsunami () {
-	rm /home/moustache/.config/i3/config
-	cp /home/moustache/.config/i3/config_tsunami /home/moustache/.config/i3/config
-
-	rm /home/moustache/.config/polybar/config.ini
-	cp /home/moustache/.config/polybar/config_tsunami.ini /home/moustache/.config/polybar/config.ini
-
-	rm /home/moustache/.config/rofi/config.rasi
-	cp /home/moustache/.config/rofi/config_tsunami.rasi /home/moustache/.config/rofi/config.rasi	
-	
-	feh --bg-scale /home/moustache/Images/wallpaper/wallpaper2.jpg
-}
-
-set_cyberpunk () {
-	rm /home/moustache/.config/i3/config
-	cp /home/moustache/.config/i3/config_cyberpunk /home/moustache/.config/i3/config
-
-	rm /home/moustache/.config/polybar/config.ini
-	cp /home/moustache/.config/polybar/config_cyberpunk.ini /home/moustache/.config/polybar/config.ini	
-
-	rm /home/moustache/.config/rofi/config.rasi
-	cp /home/moustache/.config/rofi/config_cyberpunk.rasi /home/moustache/.config/rofi/config.rasi
-	
-	feh --bg-scale /home/moustache/Images/wallpaper/wallpaper3.jpeg
-}
 
 show_version () {
 	echo $version
 }
+
+search_paths (rep) {
+
+read -r line < /home/{logname}/.config/bgutc.conf
+value="${line#*=}" 
+value="${value//\'/}"
+
+declare -A path
+for val in $value; do
+    path[$val]=""
+done
+
+
+current_section=""
+
+while IFS='=' read -r key value; do
+
+    key=$(echo "$key" | xargs)
+    value=$(echo "$value" | xargs)
+
+    [[ -z "$key" || "$key" =~ ^# ]] && continue
+
+    if [[ "$key" == \[*\] ]]; then
+        current_section="${key:1:-1}"  
+
+    elif [[ -n "$current_section" ]]; then 
+		
+		if [[ "$key" = "$rep" ]]; then
+		path[$current_section]=$value
+		fi
+
+    fi
+done < /home/{logname}/.config/bgutc.conf
+
+return path
+}
+
+# TD : code this function
+# /!\ How to get the init config path ???
+
+set_change (theme_selected) {
+
+	path=search_paths(theme_selected)
+
+	
+
+}
+
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "-h, --help 		Display this help and exit"
@@ -45,17 +75,13 @@ elif [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
 	
 else
 
-	rep=$(zenity --list --title="Select Theme" --text="Themes" --column="" $theme)
+	theme_selected=$(zenity --list --title="Select Theme" --text="Themes" --column="" $theme)
 
-	echo $rep is applied
+	echo $theme_selected is applied
 
-	if [ $rep = "tsunami" ] ; then
-	    set_tsunami
+	set_change($theme_selected)
 
-	elif [ $rep = "cyberpunk" ] ; then
-	    set_cyberpunk
-
-	fi
+fi
 	
 pkill polybar  
 polybar top & 
