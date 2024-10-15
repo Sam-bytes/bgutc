@@ -15,7 +15,7 @@ On the **first** line of the configuration file, add the names of the programs w
 ---
 > ~/.config/bgut.conf
 ```
-0   rofi waybar
+rofi waybar
 ```
 ---
 ### Step 2: Add presets to your config
@@ -25,8 +25,8 @@ On the **second** line, add the names of your themes:
 ---
 > ~/.config/bgut.conf
 ```
-0   rofi polybar
-1   waterfall nightfall
+rofi polybar
+waterfall nightfall
 ```
 ---
 ### Step 3: Preset Creation
