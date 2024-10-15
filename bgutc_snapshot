@@ -1,0 +1,65 @@
+#! /bin/bash
+
+# Bash Graphical User Theme Changer
+
+version="0.1"
+theme='tsunami cyberpunk'
+
+
+set_tsunami () {
+	rm /home/moustache/.config/i3/config
+	cp /home/moustache/.config/i3/config_tsunami /home/moustache/.config/i3/config
+
+	rm /home/moustache/.config/polybar/config.ini
+	cp /home/moustache/.config/polybar/config_tsunami.ini /home/moustache/.config/polybar/config.ini
+
+	rm /home/moustache/.config/rofi/config.rasi
+	cp /home/moustache/.config/rofi/config_tsunami.rasi /home/moustache/.config/rofi/config.rasi	
+	
+	feh --bg-scale /home/moustache/Images/wallpaper/wallpaper2.jpg
+}
+
+set_cyberpunk () {
+	rm /home/moustache/.config/i3/config
+	cp /home/moustache/.config/i3/config_cyberpunk /home/moustache/.config/i3/config
+
+	rm /home/moustache/.config/polybar/config.ini
+	cp /home/moustache/.config/polybar/config_cyberpunk.ini /home/moustache/.config/polybar/config.ini	
+
+	rm /home/moustache/.config/rofi/config.rasi
+	cp /home/moustache/.config/rofi/config_cyberpunk.rasi /home/moustache/.config/rofi/config.rasi
+	
+	feh --bg-scale /home/moustache/Images/wallpaper/wallpaper3.jpeg
+}
+
+show_version () {
+	echo $version
+}
+
+if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
+	echo "-h, --help 		Display this help and exit"
+	echo "-v, --version		Display build version and exit"
+
+elif [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
+	show_version
+	
+else
+
+	rep=$(zenity --list --title="Select Theme" --text="Themes" --column="" $theme)
+
+	echo $rep is applied
+
+	if [ $rep = "tsunami" ] ; then
+	    set_tsunami
+
+	elif [ $rep = "cyberpunk" ] ; then
+	    set_cyberpunk
+
+	fi
+	
+pkill polybar  
+polybar top & 
+polybar bottom &
+i3-msg restart
+
+fi
