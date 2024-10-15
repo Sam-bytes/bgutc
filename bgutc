@@ -11,7 +11,11 @@ set_tsunami () {
 	cp /home/moustache/.config/i3/config_tsunami /home/moustache/.config/i3/config
 
 	rm /home/moustache/.config/polybar/config.ini
-	cp /home/moustache/.config/polybar/config_tsunami.ini /home/moustache/.config/polybar/config.ini	
+	cp /home/moustache/.config/polybar/config_tsunami.ini /home/moustache/.config/polybar/config.ini
+
+	rm /home/moustache/.config/rofi/config.rasi
+	cp /home/moustache/.config/rofi/config_tsunami.rasi /home/moustache/.config/rofi/config.rasi	
+	
 	feh --bg-scale /home/moustache/Images/wallpaper/wallpaper2.jpg
 }
 
@@ -21,6 +25,10 @@ set_cyberpunk () {
 
 	rm /home/moustache/.config/polybar/config.ini
 	cp /home/moustache/.config/polybar/config_cyberpunk.ini /home/moustache/.config/polybar/config.ini	
+
+	rm /home/moustache/.config/rofi/config.rasi
+	cp /home/moustache/.config/rofi/config_cyberpunk.rasi /home/moustache/.config/rofi/config.rasi
+	
 	feh --bg-scale /home/moustache/Images/wallpaper/wallpaper3.jpeg
 }
 
