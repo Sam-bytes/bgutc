@@ -32,7 +32,7 @@ All configurations must be made in the bgutc.conf file !
 Write the name of these programs at the **first** line of the file :
 
 ---
-\# ~/.config/bgutc.conf
+\# ~/.config/bgutc.conf </br>
 rofi polybar
 
 ---
@@ -44,9 +44,9 @@ rofi polybar
 Write the name of these presets at the **second** line of the file :
 
 ---
-\# ~/.config/bgutc.conf
-rofi polybar
-waterfall nightfall
+\# ~/.config/bgutc.conf </br>
+rofi polybar </br>
+waterfall nightfall </br>
 
 ---
 
@@ -55,29 +55,29 @@ waterfall nightfall
 Now, you have to write where the config file (the one which will be read by your program) is and where your config files are by following this structure :
 
 ---
-\[program_name]
-conf="/path/to/the/conf/file"
-preset_1="/path/to/your/conf/file1"
-preset_2="/path/to/your/conf/file2"
+\[program_name] </br>
+conf="/path/to/the/conf/file" </br>
+preset_1="/path/to/your/conf/file1" </br>
+preset_2="/path/to/your/conf/file2" </br>
 
 ---
 
 In my example, I have to write this :
 
 ---
-\# ~/.config/bgutc.conf
-rofi polybar
-waterfall nightfall
+\# ~/.config/bgutc.conf </br>
+rofi polybar </br>
+waterfall nightfall </br>
 
-\[rofi]
-conf="/home/user/.config/rofi/config.rasi"
-waterfall="/home/user/.config/rofi/config_waterfall.rasi"
-nightfall="/home/user/.config/rofi/config_nightfall.rasi"
+\[rofi] </br>
+conf="/home/user/.config/rofi/config.rasi" </br>
+waterfall="/home/user/.config/rofi/config_waterfall.rasi" </br>
+nightfall="/home/user/.config/rofi/config_nightfall.rasi" </br>
 
-\[polybar]
-conf="/home/user/.config/polybar/config.ini"
-waterfall="/home/user/.config/polybar/config_waterfall.ini"
-nightfall="/home/user/.config/polybar/config_nightfall.ini"
+\[polybar] </br>
+conf="/home/user/.config/polybar/config.ini" </br>
+waterfall="/home/user/.config/polybar/config_waterfall.ini" </br>
+nightfall="/home/user/.config/polybar/config_nightfall.ini" </br>
 
 ---
 
