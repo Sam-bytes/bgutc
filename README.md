@@ -1,6 +1,6 @@
 # Bash Graphical User Theme Changer (bgutc)
 
-bgutc is a bash script for linux that allows for quick switching between different theming presets.
+bgutc is a bash script for linux that allows for quick switching between different theming presets. 
 
 ## Installation
 
@@ -75,4 +75,4 @@ Currently, bgutc is compatible with:
 
 ## If you have an issue
 
-Just, tell me. I'll try to fix as soon as I can.
+Open an issue and it will be fixed as soon as possible.
