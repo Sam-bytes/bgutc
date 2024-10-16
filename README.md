@@ -1,115 +1,78 @@
 # Bash Graphical User Theme Changer (bgutc)
 
-It is a bash script that allows tiling window manager users to create various presets for their program configurations and to switch between them quicly.
+bgutc is a bash script for linux that allows for quick switching between different theming presets. 
 
-## Composition
+## Installation
 
-bgutc comes with 4 files
-
-- an Open Source bash script (/user/bin/bgutc)
-- an configuration file (/home/user/.config/bgutc.conf)
-- a desktop entry (/home/user/.local/share/applications/bgutc.desktop)
-- an installer (update) 
-
-### More details
-
-#### bgutc.conf
-
-This is the file your suppose to configure as you wish. See the Configuration section to know how to configure it.
-
-#### bgutc.desktop
-
-This file is necessary for app launcher programs (such as Rofi).
+* TBD
 
 ## Configuration
 
-All configurations must be made in the bgutc.conf file !
 
-### Step 1 : Tell which programs you want to changer their configuration
-
-> For example, I need to change my polybar and my rofi configuration
-
-Write the name of these programs at the **first** line of the file :
+### Step 1: Add programs to the config
+On the **first** line of the configuration file, add the names of the programs whose themes you want to switch:
 
 ---
-\# ~/.config/bgutc.conf
+> ~/.config/bgut.conf
+```
+rofi waybar
+```
+---
+### Step 2: Add presets to your config
+
+On the **second** line, add the names of your themes:
+
+---
+> ~/.config/bgut.conf
+```
 rofi polybar
+waterfall nightfall
+```
+---
+### Step 3: Preset Creation
 
 ---
-
-### Step 2 : Name your preset
-
-> For example, I have two presets : waterfall and nightfall
-
-Write the name of these presets at the **second** line of the file :
-
+You now have to provide the path to each program's configuration files, for each preset:
+> ~/.config/bgut.conf
+```
+[program's name]
+conf="/path/to/the/default/config/file"
+preset_1="/path/to/a/preset/file" 
+preset_2="/path/to/another/preset/file"
+```
 ---
-\# ~/.config/bgutc.conf
+
+### Full example:
+
+> ~/.config/bgut.conf
+```
 rofi polybar
 waterfall nightfall
 
----
+[rofi]
+conf="~/.config/rofi/config.rasi
+waterfall="~/.config/rofi/waterfall.rasi"
+nightfall="~/.config/rofi/config/nightfall.rasi"
 
-### Step 3 : Write the path
+[polybar]
+conf="~/.config/polybar/config.ini"
+waterfall="~/.config/polybar/waterfall.ini"
+nightfall="~/.config/polybar/nightfall.ini"
+```
 
-Now, you have to write where the config file (the one which will be read by your program) is and where your config files are by following this structure :
+## Compatibility:
 
----
-\[program_name]
-conf="/path/to/the/conf/file"
-preset_1="/path/to/your/conf/file1"
-preset_2="/path/to/your/conf/file2"
+Currently, bgutc is compatible with:
 
----
-
-In my example, I have to write this :
-
----
-\# ~/.config/bgutc.conf
-rofi polybar
-waterfall nightfall
-
-\[rofi]
-conf="/home/user/.config/rofi/config.rasi"
-waterfall="/home/user/.config/rofi/config_waterfall.rasi"
-nightfall="/home/user/.config/rofi/config_nightfall.rasi"
-
-\[polybar]
-conf="/home/user/.config/polybar/config.ini"
-waterfall="/home/user/.config/polybar/config_waterfall.ini"
-nightfall="/home/user/.config/polybar/config_nightfall.ini"
-
----
-
-## Installation 
-
-First, you need to download the .zip file and extract the 4 files mentions before (see Composition section).
-Then, there is two possibilities :
-
-1) Use the installer programm
-
-Simply run :
-$ sudo bash update
-
-The update program will install the files in the right place
-
-2) Manually
-
-Move the bgutc file to /usr/bin/ then run :
-$ sudo chmod +x /usr/bin/bgutc
-
-Move the bgutc.conf file to ~/.config/
-
-Move the bgutc.desktop to ~/.local/share/applications/
-
-## Compatibility list
-
-Currently, bgutc is compatible with :
-
+#### WM's
 - i3
+
+#### Bars
 - polybar
+
+#### Other
 - rofi
 
 ## If you have an issue
 
-Just, tell me. I'll try to fix as soon as I can.
+Open an issue and it will be fixed as soon as possible.
