@@ -50,7 +50,7 @@ while IFS='=' read -r key value; do
     fi
 	done < /home/$(logname)/.config/bgutc.conf
 
-	echo path finded
+	echo path found
 }
 
 set_change () {
