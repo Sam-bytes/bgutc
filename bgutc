@@ -2,10 +2,13 @@
 
 # Bash Graphical User Theme Changer
 
-version="0.9"
+version="1.0"
 
+# Global variables used in the search_paths function
+option=$(sed -n '1p' /home/$(logname)/.config/bgutc.conf)
 theme=$(sed -n '2p' /home/$(logname)/.config/bgutc.conf)
 declare -A path
+declare -A argument
 
 show_version () {
 	echo $version
@@ -15,10 +18,9 @@ search_paths () {
 
 rep=$1
 
-option=$(sed -n '1p' /home/$(logname)/.config/bgutc.conf)
-
 for val in $option; do
     path["$val"]="hi"
+	argument["$val"]="hi"
 done
 
 current_section=""
@@ -38,13 +40,17 @@ while IFS='=' read -r key value; do
 		if [[ "$key" = "conf" ]]; then
 			path[$current_section]=$value
 
+		elif [[ "$key" = "arg" ]]; then
+			argument[$current_section]=$value
+
 		elif [[ "$key" = "$rep" ]]; then
 			path[$current_section]+=" ""$value"
 		fi
 
     fi
-done < /home/$(logname)/.config/bgutc.conf
+	done < /home/$(logname)/.config/bgutc.conf
 
+	echo path finded
 }
 
 set_change () {
@@ -56,10 +62,11 @@ set_change () {
         echo "$key: ${path[$key]}"
     done
 
-	#string="value1 value2"
-	#first_value=$(echo "$string" | cut -d' ' -f1)
-	#echo "$first_value"  # Outputs: value1
-
+	for program in "${!path[@]}"; do
+		read default_path newconf_path <<< "${path[$program]}"
+		rm $default_path
+		cp $newconf_path $default_path
+	done
 
 }
 
@@ -77,11 +84,20 @@ theme_selected=$(zenity --list --title="Select Theme" --text="Themes" --column="
 echo $theme_selected is applied
 
 set_change "$theme_selected"
-	
 
-#pkill polybar  
-#polybar top & 
-#polybar bottom &
-#i3-msg restart
+if echo "$option" | grep -wq "i3"; then
+	i3-msg restart
+fi
+if echo "$option" | grep -wq "polybar"; then
+	pkill polybar
+	if [[ -n argument[polybar] ]]; then
+		IFS=' ' read -r -a array <<< "${argument[polybar]}"
+		for item in "${array[@]}"; do
+			polybar $item
+		done
+	else
+		polybar
+	fi
 
+fi
 fi
