@@ -85,9 +85,18 @@ echo $theme_selected is applied
 
 set_change "$theme_selected"
 
+# Restart WM
+
 if echo "$option" | grep -wq "i3"; then
 	i3-msg restart
 fi
+
+if echo "$option" | grep -wq "sway"; then
+	swaymsg reload
+fi
+
+# Restart Bars
+
 if echo "$option" | grep -wq "polybar"; then
 	pkill polybar
 	if [[ -n argument[polybar] ]]; then
@@ -98,6 +107,16 @@ if echo "$option" | grep -wq "polybar"; then
 	else
 		polybar
 	fi
-
 fi
+
+if echo "$option" | grep -wq "waybar"; then
+	pkill -SIGUSR1 waybar
+fi
+
+# Restart others
+
+if echo "$option" | grep -wq "dunst"; then
+	pkill -SIGUSR1 dunst
+fi
+
 fi
