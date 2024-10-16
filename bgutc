@@ -1,34 +1,25 @@
-# 3 issues 
-
-# ligne 14
-# ligne 57
-# ligne 58
-
-
 #! /bin/bash
 
 # Bash Graphical User Theme Changer
 
 version="0.9"
 
-# How to config themes ???
-theme='tsunami cyberpunk'
+theme=$(sed -n '2p' /home/$(logname)/.config/bgutc.conf)
+declare -A path
 
 show_version () {
 	echo $version
 }
 
-search_paths (rep) {
+search_paths () {
 
-read -r line < /home/{logname}/.config/bgutc.conf
-value="${line#*=}" 
-value="${value//\'/}"
+rep=$1
 
-declare -A path
-for val in $value; do
-    path[$val]=""
+option=$(sed -n '1p' /home/$(logname)/.config/bgutc.conf)
+
+for val in $option; do
+    path["$val"]="hi"
 done
-
 
 current_section=""
 
@@ -39,32 +30,38 @@ while IFS='=' read -r key value; do
 
     [[ -z "$key" || "$key" =~ ^# ]] && continue
 
-    if [[ "$key" == \[*\] ]]; then
+    if [[ "$key" == \[*\] ]]; then		# Check which is beign read
         current_section="${key:1:-1}"  
 
-    elif [[ -n "$current_section" ]]; then 
+    elif [[ -n "$current_section" ]]; then 	
 		
-		if [[ "$key" = "$rep" ]]; then
-		path[$current_section]=$value
+		if [[ "$key" = "conf" ]]; then
+			path[$current_section]=$value
+
+		elif [[ "$key" = "$rep" ]]; then
+			path[$current_section]+=" ""$value"
 		fi
 
     fi
-done < /home/{logname}/.config/bgutc.conf
-
-return path
-}
-
-# TD : code this function
-# /!\ How to get the init config path ???
-
-set_change (theme_selected) {
-
-	path=search_paths(theme_selected)
-
-	
+done < /home/$(logname)/.config/bgutc.conf
 
 }
 
+set_change () {
+	theme_selected=$1
+
+	search_paths "$theme_selected"
+
+	for key in "${!path[@]}"; do
+        echo "$key: ${path[$key]}"
+    done
+
+	#string="value1 value2"
+	#first_value=$(echo "$string" | cut -d' ' -f1)
+	#echo "$first_value"  # Outputs: value1
+
+
+}
 
 if [ "$1" = "-h" ] || [ "$1" = "--help" ] ; then
 	echo "-h, --help 		Display this help and exit"
@@ -75,17 +72,16 @@ elif [ "$1" = "-v" ] || [ "$1" = "--version" ] ; then
 	
 else
 
-	theme_selected=$(zenity --list --title="Select Theme" --text="Themes" --column="" $theme)
+theme_selected=$(zenity --list --title="Select Theme" --text="Themes" --column="" $theme)
 
-	echo $theme_selected is applied
+echo $theme_selected is applied
 
-	set_change($theme_selected)
-
-fi
+set_change "$theme_selected"
 	
-pkill polybar  
-polybar top & 
-polybar bottom &
-i3-msg restart
+
+#pkill polybar  
+#polybar top & 
+#polybar bottom &
+#i3-msg restart
 
 fi
