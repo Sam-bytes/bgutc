@@ -5,6 +5,8 @@ bgutc is a bash script for linux that allows for quick switching between differe
 ## Installation
 ### Manual installation
 ```
+$ git clone https://github.com/sam-bytes/bgutc.git
+$ cd bgutc
 # bash install.sh
 ```
 
